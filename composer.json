@@ -5,6 +5,16 @@
     "require": {
         "php": ">=7.4"
     },
+    "autoload": {
+        "psr-4": {
+            "Resource\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Resource\\Tests\\": "tests/"
+        }
+    },
     "license": "MIT",
     "authors": [
         {
