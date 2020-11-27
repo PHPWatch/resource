@@ -54,7 +54,7 @@ This functionality can be converted to an object-oriented code with this library
 ```php
 use Resource\Curl\CurlHandle;
 
-$curl = new CurlHandle('https://php.watch');
+$curl = CurlHandle::init('https://php.watch');
 $curl->exec();
 ```
 
