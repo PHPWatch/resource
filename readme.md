@@ -64,8 +64,22 @@ With PHP's updated resource objects, the resource is automatically cleared when 
 
 This library brings this functionality to all PHP versions, and does so in a consistent way. 
 
-For example, prior to PHP 8.0, the `xml_parser_free` function call was necessary to free up the memory. In PHP 8.0, the updated `XMLParser` does it automatically. `xml_parser_free` is still available in PHP 8.0, but OpenSSL extension's `openssl_pkey_free()` function is deprecated in PHP 8.0.  
+For example, prior to PHP 8.0, the `xml_parser_free` function call was necessary to free up the memory. In PHP 8.0, the [migrated `XMLParser`](https://php.watch/versions/8.0/xmlwriter-resource) does it automatically. `xml_parser_free` is still available in PHP 8.0, but OpenSSL extension's [`openssl_pkey_free()` function is deprecated in PHP 8.0](https://php.watch/versions/8.0/OpenSSL-resource#openssl-deprecations).  
 
 This library can work-out the version differences, and call the `xml_parser_free` function automatically when using PHP 7.4. For OpenSSL objects, this library hides the complexity of checking the PHP version before calling the deprecated `openssl_pkey_free`. 
 
 The caller does not need to know the inner details of PHP's `resource` to object migration, because this library provides the translation layer to seamlessly work-out the inner differences in the object migration. 
+
+### Semantics
+
+All Resource objects from this library are crafted to provide an intuitive interface. The class constructors and either marked `private` to prevent direct instantiation, or the constructors map to the only function that creates a trantional PHP `resource`. 
+
+Furthermore, when a `resource` cannot be serialized, or otherwise imposes other restrictions, that is conveyed with PHP class visibility and exception mechanisms. 
+
+### Cross-version compatibility
+
+This library provides a SEMVER promise to maintain cross-version compatibility with PHP versions. For example, `Resource\Curl\CurlHandle` class API will be exactly the same for all supported PHP versions, even on PHP versions that use trantional `resource` objects, or PHP ever adds an OOP functionality to the PHP core's `\CurlHandle` object.
+
+
+---
+
