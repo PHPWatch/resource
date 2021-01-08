@@ -7,18 +7,21 @@ namespace Resource\Curl;
 use Resource\Resource;
 use Resource\ResourceTranslationLayer;
 
-class CurlHandle implements Resource {
-
+class CurlHandle implements Resource
+{
     use ResourceTranslationLayer;
 
-    private function __construct() {}
-
     /**
+     * Initialize a cURL session.
+     *
      * @param string|null $url
+     *
      * @return static|false
      */
-    public static function init(?string $url = null) {
+    public static function init(?string $url = null)
+    {
         $resource = curl_init($url);
+
         if ($resource === false) {
             return false;
         }
@@ -29,55 +32,90 @@ class CurlHandle implements Resource {
         return $instance;
     }
 
-    public function close(): void {
+    /**
+     * Close the resource, and free up system resources.
+     *
+     * @return void
+     */
+    public function close(): void
+    {
         if ($this->isObject) {
             curl_close($this->resource);
+
             return;
         }
     }
 
     /**
-     * @return CurlHandle|false
+     * Copy a cURL handle along with all of its preferences.
+     *
+     * @return \Resource\Curl\CurlHandle|false
      */
-    public function copyHandle() {
+    public function copyHandle()
+    {
         $object = curl_copy_handle($this->resource);
+
         if ($object === false) {
             return false;
         }
 
         $return = new static();
         $return->resource = $object;
+
         return $return;
     }
 
-    public function errno(): int {
+    /**
+     * Return the last error number.
+     *
+     * @return int
+     */
+    public function errno(): int
+    {
         return curl_errno($this->resource);
     }
 
-    public function error(): string {
+    /**
+     * Return a string containing the last error for the current session.
+     *
+     * @return string
+     */
+    public function error(): string
+    {
         return curl_error($this->resource);
     }
 
     /**
+     * URL encodes the given string.
+     *
      * @param string $string
+     *
      * @return string|false
      */
-    public function escape(string $string) {
+    public function escape(string $string)
+    {
         return curl_escape($this->resource, $string);
     }
 
     /**
+     * Perform a cURL session.
+     *
      * @return string|bool
      */
-    public function exec() {
+    public function exec()
+    {
         return curl_exec($this->resource);
     }
 
     /**
+     * Get information regarding a specific transfer.
+     *
      * @param int|null $option
+     *
      * @return mixed
      */
-    public function getinfo($option = null) {
+    public function getinfo(?int $option = null)
+    {
         return curl_getinfo($this->resource, $option);
     }
 }

@@ -4,19 +4,39 @@
 
 namespace Resource;
 
-trait ResourceTranslationLayer {
-
+trait ResourceTranslationLayer
+{
     /**
-     * @var $resource|object
+     * Get instance of resource.
+     *
+     * @var|object
      */
     protected $resource;
-    protected bool $isObject;
 
-    protected function isObject(): bool {
+    /**
+     * Indicates if the resource is of type object.
+     *
+     * @var bool
+     */
+    protected $isObject = false;
+
+    /**
+     * Determine if the resource is of type object.
+     *
+     * @return bool
+     */
+    public function isObject(): bool
+    {
         return $this->isObject;
     }
 
-    public function __destruct() {
+    /**
+     * Destroy instance of resource.
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
         $this->close();
     }
 }

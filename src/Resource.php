@@ -2,6 +2,12 @@
 
 namespace Resource;
 
-interface Resource {
-    public function close();
+interface Resource
+{
+    /**
+     * Close the resource, and free up system resources.
+     *
+     * @return void
+     */
+    public function close(): void;
 }
