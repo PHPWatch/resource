@@ -37,10 +37,14 @@ class CurlHandleTest extends TestCase
         $this->curl = CurlHandle::init('https://www.example.com');
 
         $curlReflection = new ReflectionClass($this->curl);
-        $resource = $curlReflection->getProperty('resource');
-        $resource->setAccessible(true);
+        $property = $curlReflection->getProperty('resource');
+        $property->setAccessible(true);
 
-        $this->assertIsResource($resource->getValue($this->curl));
+        if (! in_array('8', explode('.', phpversion()))) {
+            $this->assertIsResource($property->getValue($this->curl));
+        } else {
+            $this->assertIsObject($property->getValue($this->curl));
+        }
     }
 
     public function testHandlerCanBeExecuted()
