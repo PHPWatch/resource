@@ -4,15 +4,13 @@
 
 namespace Resource;
 
-trait ResourceTranslationLayer {
-
-    /**
-     * @var $resource|object
-     */
+trait ResourceTranslationLayer
+{
     protected $resource;
-    protected bool $isObject;
 
-    protected function isObject(): bool {
+    protected $isObject = false;
+
+    public function isObject(): bool {
         return $this->isObject;
     }
 
