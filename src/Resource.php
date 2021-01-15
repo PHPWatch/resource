@@ -2,6 +2,7 @@
 
 namespace Resource;
 
-interface Resource {
-    public function close();
+interface Resource
+{
+    public function close(): void;
 }
