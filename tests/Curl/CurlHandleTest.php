@@ -55,7 +55,7 @@ class CurlHandleTest extends TestCase
         $copy = $this->curl->copyHandle();
 
         $this->assertInstanceOf(CurlHandle::class, $copy);
-        $this->assertEquals(gettype($this->curl), gettype($copy));
+        $this->assertSame(gettype($this->curl), gettype($copy));
     }
 
     public function testGetsInfoOnTransfer() {
@@ -63,6 +63,6 @@ class CurlHandleTest extends TestCase
 
         $this->curl->exec();
 
-        $this->assertequals(200, $this->curl->getinfo(CURLINFO_RESPONSE_CODE));
+        $this->assertSame(200, $this->curl->getinfo(CURLINFO_RESPONSE_CODE));
     }
 }
